@@ -1,0 +1,88 @@
+:root {
+    --primary: #4a69bd;
+    --primary-dark: #3c58a8;
+    --secondary: #e58e26;
+    --background: #1a1a2e;
+    --surface: #242442;
+    --surface-light: #2e2e50;
+    --text: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --danger: #e74c3c;
+    --success: #2ecc71;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Styles de base */
+body {
+    background-color: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* En-tête */
+header {
+    background-color: var(--surface);
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Conteneur principal */
+.main-content {
+    flex: 1;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Boutons et formulaires */
+.btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes slideIn {
+    from { transform: translateX(150%); }
+    to { transform: translateX(0); }
+}
+
+.notification {
+    animation: slideIn 0.3s forwards;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .categories {
+        flex-direction: column;
+    }
+    
+    .category-btn {
+        width: 100%;
+    }
+    
+    .sub-menu {
+        overflow-x: auto;
+    }
+} 
