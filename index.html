@@ -3,650 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>systemE - Analyse de Loterie</title>
-    <link rel="manifest" href="#" id="manifest-placeholder">
     <meta name="theme-color" content="#1a1a2e">
+    <title>SystemEl - Analyse de Loterie</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        :root {
-            --primary: #4a69bd;
-            --primary-dark: #3c58a8;
-            --secondary: #e58e26;
-            --background: #1a1a2e;
-            --surface: #242442;
-            --surface-light: #2e2e50;
-            --text: #e0e0e0;
-            --text-secondary: #b0b0b0;
-            --danger: #e74c3c;
-            --success: #2ecc71;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--background);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        header {
-            background-color: var(--surface);
-            color: var(--text);
-            padding: 1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .app-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--secondary);
-        }
-        
-        .app-name {
-            font-size: 1.2rem;
-            color: var(--text);
-        }
-        
-        .main-content {
-            flex: 1;
-            padding: 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-        
-        .categories {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .category-btn {
-            background-color: var(--surface);
-            color: var(--text);
-            border: none;
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex: 1;
-            min-width: 120px;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-.category-btn, .sub-menu-btn, .btn {
-    transition: transform 0.2s ease, background-color 0.3s ease;
-}
-.category-btn:hover, .sub-menu-btn:hover, .btn:hover {
-    transform: translateY(-2px);
-}
-.notification {
-    animation: slideIn 0.3s forwards;
-}
-@keyframes slideIn {
-    from { transform: translateX(150%); }
-    to { transform: translateX(0); }
-}
-        
-        .category-btn:hover {
-            background-color: var(--surface-light);
-        }
-        
-        .category-btn.active {
-            background-color: var(--primary);
-            font-weight: bold;
-        }
-        
-        .sub-menu {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--surface-light);
-            padding-bottom: 0.5rem;
-        }
-        
-        .sub-menu-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            position: relative;
-            font-size: 0.9rem;
-        }
-        
-        .sub-menu-btn:hover {
-            color: var(--text);
-        }
-        
-        .sub-menu-btn.active {
-            color: var(--secondary);
-            font-weight: bold;
-        }
-        
-        .sub-menu-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -0.5rem;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background-color: var(--secondary);
-        }
-        
-        .content-area {
-            background-color: var(--surface);
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Formulaire d'entrée */
-        .entry-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        
-        .form-label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-        
-        .form-input {
-            background-color: var(--surface-light);
-            border: 1px solid var(--surface-light);
-            border-radius: 4px;
-            padding: 0.75rem;
-            color: var(--text);
-            font-size: 1rem;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(74, 105, 189, 0.3);
-        }
-        
-        .ball-inputs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-        
-        .ball-input {
-            width: 80px;
-            text-align: center;
-        }
-        
-        .btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        
-        .btn:hover {
-            background-color: var(--primary-dark);
-        }
-        
-        .btn-danger {
-            background-color: var(--danger);
-        }
-        
-        .btn-danger:hover {
-            background-color: #c0392b;
-        }
-        
-        .btn-success {
-            background-color: var(--success);
-        }
-        
-        .btn-success:hover {
-            background-color: #27ae60;
-        }
-        
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        /* Consulter */
-        .search-form {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .search-input {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .results-area {
-            margin-top: 2rem;
-        }
-        
-        .result-title {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            color: var(--secondary);
-        }
-        
-        .result-item {
-            background-color: var(--surface-light);
-            border-radius: 4px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .result-label {
-            font-weight: bold;
-        }
-        
-        .result-value {
-            color: var(--text-secondary);
-        }
-        
-        /* Statistiques */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .stats-card {
-            background-color: var(--surface-light);
-            border-radius: 8px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
-        .stats-title {
-            font-size: 1.1rem;
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-        }
-        
-        .stats-list {
-            list-style: none;
-        }
-        
-        .stats-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--surface);
-        }
-        
-        .stats-item:last-child {
-            border-bottom: none;
-        }
-        
-        .chart-container {
-            height: 300px;
-            margin-top: 1.5rem;
-            position: relative;
-        }
-        
-        /* Affichage des tirages */
-        .draws-history {
-            margin-top: 2rem;
-        }
-        
-        .draw-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-        
-        .draw-table th,
-        .draw-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid var(--surface-light);
-        }
-        
-        .draw-table th {
-            color: var(--secondary);
-            font-weight: normal;
-        }
-        
-        .draw-ball {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            text-align: center;
-            line-height: 40px;
-            margin-right: 0.5rem;
-        }
-        
-        .install-prompt {
-            position: fixed;
-            bottom: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--surface);
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 999;
-            max-width: 90%;
-            width: 400px;
-        }
-        
-        .install-text {
-            flex: 1;
-        }
-        
-        .install-btn {
-            background-color: var(--secondary);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-        
-        .loading-spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-top: 4px solid var(--secondary);
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .notification {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            padding: 1rem;
-            border-radius: 8px;
-            background-color: var(--success);
-            color: white;
-            max-width: 300px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transform: translateX(150%);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .categories {
-                flex-direction: column;
-            }
-            
-            .category-btn {
-                width: 100%;
-            }
-            
-            .sub-menu {
-                overflow-x: auto;
-                padding-bottom: 1rem;
-            }
-            
-            .content-area {
-                padding: 1rem;
-            }
-            
-            .ball-inputs {
-                justify-content: center;
-            }
-            
-            .stats-container {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        footer {
-            background-color: var(--surface);
-            padding: 1rem;
-            text-align: center;
-            margin-top: auto;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-        
-        /* Pour la boule recherchée */
-        .highlight-ball {
-            background-color: var(--secondary);
-        }
-        
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1rem;
-            padding: 1rem;
-        }
-
-        .pagination button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .draws-history {
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .draw-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .draw-table th {
-            position: sticky;
-            top: 0;
-            background-color: var(--surface);
-            z-index: 1;
-        }
-    </style>
+    <!-- Firebase SDK (version modulaire, uniquement Firestore) -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js';
+        import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js';
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDH6gxTAax93u8Ky-KV4fol1F_i9jzlHyI",
+            authDomain: "systemel-1e3f9.firebaseapp.com",
+            projectId: "systemel-1e3f9",
+            storageBucket: "systemel-1e3f9.firebasestorage.app",
+            messagingSenderId: "886305091055",
+            appId: "1:886305091055:web:91910a288f64a9490bda1a",
+            measurementId: "G-9TN7NJ4SP8"
+        };
+        // Initialiser Firebase
+        const app = initializeApp(firebaseConfig);
+        // Exporter Firestore pour utilisation dans app.js
+        window.firebaseApp = app;
+        window.firebaseFirestore = getFirestore(app);
+    </script>
 </head>
 <body>
-    <header>
-        <div class="app-header">
-            <div>
-                <span class="app-title">system</span><span class="app-name">E</span>
+    <!-- Contenu principal -->
+    <div id="main-app">
+        <header>
+            <div class="app-header">
+                <div>
+                    <span class="app-title">System</span><span class="app-name">El</span>
+                </div>
+                <div>
+                    <button id="install-btn" class="btn" style="display: none;">Installer</button>
+                </div>
             </div>
-            <button id="install-btn" class="btn" style="display: none;">Installer</button>
-        </div>
-    </header>
-    
-    <main class="main-content">
-        <div class="categories">
-            <button class="category-btn active" data-category="GH18">GH18</button>
-            <button class="category-btn" data-category="CIV10">CIV10</button>
-            <button class="category-btn" data-category="CIV13">CIV13</button>
-            <button class="category-btn" data-category="CIV16">CIV16</button>
-        </div>
-        
-        <div class="sub-menu">
-            <button class="sub-menu-btn active" data-menu="entrees">Entrées</button>
-            <button class="sub-menu-btn" data-menu="consulter">Consulter</button>
-            <button class="sub-menu-btn" data-menu="statistiques">Statistiques</button>
-        </div>
-        
-        <div class="content-area">
-            <div id="entrees-content" class="menu-content">
-                <h2>Enregistrer un tirage - <span id="current-category">GH18</span></h2>
-                <form id="entry-form" class="entry-form">
-                    <div class="form-group">
-                        <label class="form-label" for="draw-date">Date du tirage</label>
-                        <input type="date" id="draw-date" class="form-input" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Numéros des boules tirées (01-90)</label>
-                        <div class="ball-inputs">
-                            <input type="number" class="form-input ball-input" min="1" max="90" required placeholder="B1">
-                            <input type="number" class="form-input ball-input" min="1" max="90" required placeholder="B2">
-                            <input type="number" class="form-input ball-input" min="1" max="90" required placeholder="B3">
-                            <input type="number" class="form-input ball-input" min="1" max="90" required placeholder="B4">
-                            <input type="number" class="form-input ball-input" min="1" max="90" required placeholder="B5">
+        </header>
+
+        <main class="main-content">
+            <div class="categories">
+                <button class="category-btn active" data-category="GH18">GH18</button>
+                <button class="category-btn" data-category="CIV10">CIV10</button>
+                <button class="category-btn" data-category="CIV13">CIV13</button>
+                <button class="category-btn" data-category="CIV16">CIV16</button>
+            </div>
+
+            <div class="sub-menu">
+                <button class="sub-menu-btn active" data-menu="entrees">Entrées</button>
+                <button class="sub-menu-btn" data-menu="consulter">Consulter</button>
+                <button class="sub-menu-btn" data-menu="statistiques">Statistiques</button>
+            </div>
+
+            <div class="content-area">
+                <!-- Entrées -->
+                <div id="entrees-content" class="menu-content">
+                    <h2>Enregistrer un tirage - <span id="current-category">GH18</span></h2>
+                    <form id="entry-form" class="entry-form">
+                        <div class="form-group">
+                            <label class="form-label" for="draw-date">Date du tirage</label>
+                            <input type="date" id="draw-date" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Numéros des boules tirées (01-90)</label>
+                            <div class="ball-inputs">
+                                <input type="number" class="form-input ball-input" min="1" max="90" required placeholder="B1">
+                                <input type="number" class="form-input ball-input" min="1" max="90" required placeholder="B2">
+                                <input type="number" class="form-input ball-input" min="1" max="90" required placeholder="B3">
+                                <input type="number" class="form-input ball-input" min="1" max="90" required placeholder="B4">
+                                <input type="number" class="form-input ball-input" min="1" max="90" required placeholder="B5">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Enregistrer le tirage</button>
+                    </form>
+
+                    <div class="draws-history">
+                        <h3>Historique des tirages</h3>
+                        <div id="draws-table-container">
+                            <table class="draw-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Boules</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="draws-table-body"></tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <button id="prev-page" disabled>Précédent</button>
+                            <span id="page-info">Page 1</span>
+                            <button id="next-page">Suivant</button>
                         </div>
                     </div>
-                    <button type="submit" class="btn">Enregistrer le tirage</button>
-                </form>
-                
-                <div class="draws-history">
-                    <h3>Historique des tirages</h3>
-                    <div id="draws-table-container">
-                        <table class="draw-table">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Boules</th>
-                                </tr>
-                            </thead>
-                            <tbody id="draws-table-body">
-                                <!-- Dynamiquement rempli -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                
-                <div class="btn-group">
-                    <button id="reset-data-btn" class="btn btn-danger">Réinitialiser les données</button>
-                    <button id="export-data-btn" class="btn btn-success">Exporter les données</button>
-                    <button id="import-data-btn" class="btn btn-primary">Importer des données</button>
-                    <button id="backup-data-btn" class="btn btn-secondary">Sauvegarder</button>
-                    <button id="restore-data-btn" class="btn btn-info">Restaurer</button>
-                </div>
-            </div>
-            
-            <div id="consulter-content" class="menu-content" style="display: none;">
-                <h2>Consulter les récurrences - <span id="current-category-consulter">GH18</span></h2>
-                <form id="search-form" class="search-form">
-                    <div class="form-group search-input">
-                        <label class="form-label" for="ball-number">Numéro de boule recherché (01-90)</label>
-                        <input type="number" id="ball-number" class="form-input" min="1" max="90" required placeholder="Entrez le numéro">
-                    </div>
-                    <div class="form-group" style="align-self: flex-end;">
-                        <button type="submit" class="btn">Rechercher</button>
-                    </div>
-                </form>
-                
-                <div class="results-area" id="results-area">
-                    <!-- Résultats de recherche dynamiques -->
-                </div>
-            </div>
-            
-            <div id="statistiques-content" class="menu-content" style="display: none;">
-                <h2>Statistiques - <span id="current-category-stats">GH18</span></h2>
-                
-                <div class="stats-container">
-                    <div class="stats-card">
-                        <h3 class="stats-title">Boules les plus fréquentes</h3>
-                        <ul class="stats-list" id="most-frequent-list">
-                            <!-- Dynamiquement rempli -->
-                        </ul>
-                    </div>
-                    
-                    <div class="stats-card">
-                        <h3 class="stats-title">Boules les moins fréquentes</h3>
-                        <ul class="stats-list" id="least-frequent-list">
-                            <!-- Dynamiquement rempli -->
-                        </ul>
-                    </div>
 
-                    <div class="stats-card">
-                        <h3 class="stats-title">Prédictions pour le prochain tirage</h3>
-                        <ul class="stats-list" id="prediction-list">
-                            <!-- Dynamiquement rempli -->
-                        </ul>
+                    <div class="btn-group">
+                        <button id="reset-data-btn" class="btn btn-danger">Réinitialiser les données</button>
+                        <button id="export-data-btn" class="btn btn-success">Exporter les données</button>
+                        <button id="import-data-btn" class="btn btn-primary">Importer des données</button>
+                        <button id="backup-data-btn" class="btn btn-secondary">Sauvegarder</button>
+                        <button id="restore-data-btn" class="btn btn-info">Restaurer</button>
                     </div>
-                </div>
-                
-                <div class="chart-container" id="frequency-chart">
-                    <!-- Graphique de fréquence -->
                 </div>
 
-                <div class="chart-container" id="trend-chart">
-                    <!-- Graphique de tendance -->
+                <!-- Consulter -->
+                <div id="consulter-content" class="menu-content" style="display: none;">
+                    <h2>Consulter les récurrences - <span id="current-category-consulter">GH18</span></h2>
+                    <form id="search-form" class="search-form">
+                        <div class="form-group search-input">
+                            <label class="form-label" for="ball-number">Numéro de boule recherché (01-90)</label>
+                            <input type="number" id="ball-number" class="form-input" min="1" max="90" required placeholder="Entrez le numéro">
+                        </div>
+                        <div class="form-group" style="align-self: flex-end;">
+                            <button type="submit" class="btn">Rechercher</button>
+                        </div>
+                    </form>
+
+                    <div class="results-area" id="results-area">
+                        <div class="result-item" id="same-draw-result" style="display: none;">
+                            <span class="result-label">Nombre de tirages avec ce numéro :</span>
+                            <span class="result-value" id="same-draw-count"></span>
+                        </div>
+                        <div class="result-item" id="next-draw-result" style="display: none;">
+                            <span class="result-label">Présent dans le tirage suivant :</span>
+                            <span class="result-value" id="next-draw-count"></span>
+                        </div>
+                        <div class="result-item" id="simultaneous-result" style="display: none;">
+                            <span class="result-label">Numéros les plus simultanés :</span>
+                            <span class="result-value" id="simultaneous-balls"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistiques -->
+                <div id="statistiques-content" class="menu-content" style="display: none;">
+                    <h2>Statistiques - <span id="current-category-stats">GH18</span></h2>
+                    <div class="stats-filter">
+                        <label class="form-label">Période :</label>
+                        <select id="stats-period" class="form-input">
+                            <option value="all">Tout le temps</option>
+                            <option value="last30">30 derniers jours</option>
+                            <option value="last7">7 derniers jours</option>
+                        </select>
+                    </div>
+                    <div class="stats-container">
+                        <div class="stats-card">
+                            <h3 class="stats-title">Boules les plus fréquentes</h3>
+                            <canvas id="most-frequent-donut"></canvas>
+                        </div>
+                        <div class="stats-card">
+                            <h3 class="stats-title">Boules les moins fréquentes</h3>
+                            <canvas id="least-frequent-donut"></canvas>
+                        </div>
+                        <div class="stats-card">
+                            <h3 class="stats-title">Prédictions pour le prochain tirage</h3>
+                            <ul class="stats-list" id="prediction-list"></ul>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <h3 class="stats-title">Tendance des boules</h3>
+                        <canvas id="trend-chart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3 class="stats-title">Heatmap des numéros</h3>
+                        <canvas id="heatmap-chart"></canvas>
+                    </div>
                 </div>
             </div>
+        </main>
+
+        <div id="install-prompt" class="install-prompt" style="display: none;">
+            <div class="install-text">
+                <p>Installez SystemEl sur votre appareil pour une utilisation hors ligne</p>
+            </div>
+            <button id="install-prompt-btn" class="install-btn">Installer</button>
+            <button id="close-prompt-btn" class="close-btn">×</button>
         </div>
-    </main>
-    
-    <div id="install-prompt" class="install-prompt" style="display: none;">
-        <div class="install-text">
-            <p>Installez systemE sur votre appareil pour une utilisation hors ligne</p>
-        </div>
-        <button id="install-prompt-btn" class="install-btn">Installer</button>
-        <button id="close-prompt-btn" class="close-btn">×</button>
-    </div>
-    
-    <div id="notification" class="notification">
-        <!-- Message de notification -->
-    </div>
-    
-    <footer>
-        © 2025 Analloto - Application d'analyse de loterie
-    </footer>
 
-    <script src="https://unpkg.com/idb@7/build/umd.js"></script>
+        <div id="notification" class="notification"></div>
+        <div id="loader" class="loader" style="display: none;">
+            <div class="spinner"></div>
+            <p>Chargement...</p>
+        </div>
+
+        <footer>
+            © 2025 Analloto - Application d'analyse de loterie
+        </footer>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script src="js/app.js" type="module"></script>
 </body>
 </html>

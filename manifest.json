@@ -1,0 +1,20 @@
+{
+    "name": "SystemEl - Analyse de Loterie",
+    "short_name": "SystemEl",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1a1a2e",
+    "theme_color": "#1a1a2e",
+    "icons": [
+        {
+            "src": "https://via.placeholder.com/192x192.png?text=SystemEl",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "https://via.placeholder.com/512x512.png?text=SystemEl",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
